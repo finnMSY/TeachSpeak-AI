@@ -10,3 +10,6 @@ class hassaid:
     
     def get_teacher(self):
         pass
+        
+    def get_json(self):
+        pass

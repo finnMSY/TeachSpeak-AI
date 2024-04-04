@@ -10,3 +10,6 @@ class account:
     
     def get_account_type(self):
         pass
+        
+    def get_json(self):
+        pass

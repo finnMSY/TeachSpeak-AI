@@ -23,3 +23,6 @@ class teacher:
     def get_class(self) -> str:
         pass
     
+    def get_json(self):
+        pass
+    

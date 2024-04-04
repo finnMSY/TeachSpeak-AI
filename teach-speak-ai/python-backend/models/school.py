@@ -7,3 +7,6 @@ class school:
     
     def get_location(self):
         pass
+        
+    def get_json(self):
+        pass

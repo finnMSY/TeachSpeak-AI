@@ -4,3 +4,6 @@ class keyword:
     
     def get_word(self):
         pass
+        
+    def get_json(self):
+        pass
