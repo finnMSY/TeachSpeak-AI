@@ -1,9 +1,10 @@
 class keyword:
-    def __init__(self):
-        pass
+    def __init__(self, word):
+        self.__id = None
+        self.__word = word
     
     def get_word(self):
-        pass
+        return self.__word
         
     def get_json(self):
         pass
