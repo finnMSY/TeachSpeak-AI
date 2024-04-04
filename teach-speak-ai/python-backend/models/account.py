@@ -1,15 +1,18 @@
 class account:
-    def __init__(self):
-        pass
+    def __init__(self, username, password, account_type):
+        self.__id = None
+        self.__username = username
+        self.__password = password
+        self.__account_type = account_type
     
     def get_username(self):
-        pass
+        return self.__username
     
     def get_password(self):
-        pass
+        return self.__password
     
     def get_account_type(self):
-        pass
+        return self.__account_type
         
     def get_json(self):
         pass
