@@ -1,12 +1,13 @@
 class school:
-    def __init__(self):
-        pass
+    def __init__(self, name, location):
+        self.__name = name
+        self.__location = location
     
     def get_name(self):
-        pass
+        return self.__name
     
     def get_location(self):
-        pass
+        return self.__location
         
     def get_json(self):
         pass
