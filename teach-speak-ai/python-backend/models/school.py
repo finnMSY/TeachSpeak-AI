@@ -1,5 +1,6 @@
 class school:
     def __init__(self, name, location):
+        self.__id = None
         self.__name = name
         self.__location = location
     
