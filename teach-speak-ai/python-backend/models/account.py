@@ -4,6 +4,9 @@ class account:
         self.__username = username
         self.__password = password
         self.__account_type = account_type
+            
+    def get_id(self) -> int:
+        return self.__id
     
     def get_username(self):
         return self.__username

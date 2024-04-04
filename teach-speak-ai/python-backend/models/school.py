@@ -3,6 +3,9 @@ class school:
         self.__id = None
         self.__name = name
         self.__location = location
+            
+    def get_id(self) -> int:
+        return self.__id
     
     def get_name(self):
         return self.__name

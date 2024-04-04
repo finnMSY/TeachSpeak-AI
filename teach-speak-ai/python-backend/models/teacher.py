@@ -10,6 +10,9 @@ class teacher:
         self.__account = account
         self.__class_name = class_name
     
+    def get_id(self) -> int:
+        return self.__id
+    
     def get_firstname(self) -> str:
         return self.__firstname
     
