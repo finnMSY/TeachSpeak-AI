@@ -6,14 +6,18 @@ import concurrent.futures
 from datetime import datetime
 import os
 
+def get_default_audio_device():
+    default_input_device_info = sd.query_devices(device=sd.default.device[0])
+    return default_input_device_info
+
 class Recorder:
-    def __init__(self, samplerate=44100, channels=2, duration=10, device=None):
+    def __init__(self, samplerate=44100, channels=2, duration=10, device=get_default_audio_device()['name']):
         self.samplerate = samplerate
         self.channels = channels
         self.recording = False
         self.input_device = device
         self.max_duration = duration
-        self.stop_flag = False  # Initialize stop_flag
+        self.stop_flag = False
 
     def start_recording(self):
         with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -21,11 +25,18 @@ class Recorder:
             future = executor.submit(self._record)  # Removed unnecessary arguments
             
             # Run your main loop
+            start_time = time.time()
+            # while time.time() - start_time < self.max_duration:
+            #     if self.stop_flag:
+            #         break
+
             while True:
                 if keyboard.is_pressed('enter'):
                     self.stop_recording()
                     break
             
+            print("Hello")
+
             # Wait for the recording to finish and get the result
             audio_data = future.result()
 
@@ -63,9 +74,8 @@ class Recorder:
         print("Recording completed.")
         return recorded_audio
 
-def get_default_audio_device():
-    default_input_device_info = sd.query_devices(device=sd.default.device[0])
-    return default_input_device_info
-
 r = Recorder(device=get_default_audio_device()['name'])
 r.start_recording()
+
+time.sleep(3)
+r.stop_recording()
