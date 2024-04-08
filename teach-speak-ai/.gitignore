@@ -7,7 +7,6 @@
 
 # testing
 /coverage
-/python-backend/audio_files
 
 # production
 /build
