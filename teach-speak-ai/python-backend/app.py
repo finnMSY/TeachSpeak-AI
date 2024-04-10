@@ -1,8 +1,10 @@
 from flask import Flask
 from Recorder import Recorder
+from flask_cors import CORS
 
 app = Flask(__name__)
 recorder = Recorder()
+CORS(app)
 
 @app.route('/')
 def index():
@@ -11,12 +13,10 @@ def index():
 @app.route('/api/start_recording')
 def start_recording_api():
     recorder.start_recording()
-    return "Recording started."
 
 @app.route('/api/stop_recording')
 def stop_recording_api():
     recorder.stop_recording()
-    return "Recording stopped."
 
 if __name__ == '__main__':
     app.run(port=5000)
