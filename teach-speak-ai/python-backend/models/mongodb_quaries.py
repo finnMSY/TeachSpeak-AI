@@ -39,3 +39,18 @@ class mongodb_queries:
     
     def insert_one_into_teachers(self, teacher):
         self.__db.Teacher.insert_one(teacher.get_json())
+        
+    def get_one_from_accounts(self, account):
+        return self.__db.Account.find_one(account.get_json())
+    
+    def get_one_from_ahassaid(self, hassaid):
+        return self.__db.HasSaid.find_one(hassaid.get_json())
+    
+    def get_one_from_keywords(self, keyword):
+        return self.__db.KeyWords.find_one(keyword.get_json())
+    
+    def get_one_from_schools(self, school):
+        return self.__db.School.find_one(school.get_json())
+    
+    def get_one_from_teachers(self, teacher):
+        return self.__db.Teacher.find_one(teacher.get_json())

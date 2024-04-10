@@ -17,5 +17,5 @@ class school:
         return self.__location
         
     def get_json(self):
-        school_json = {"_id": self.get_id(), "name": self.get_name(), "location": self.get_location()}
+        school_json = {"name": self.get_name(), "location": self.get_location()}
         return school_json

@@ -32,5 +32,5 @@ class teacher:
         return self.__class_name
     
     def get_json(self):
-        teacher_json = {"_id": self.get_id(), "firstname": self.get_firstname(), "lastname": self.get_lastname(), "school": self.get_school(), "account": self.get_account(), "class": self.get_class_name()}
+        teacher_json = {"firstname": self.get_firstname(), "lastname": self.get_lastname(), "school": self.get_school(), "account": self.get_account(), "class": self.get_class_name()}
         return teacher_json    

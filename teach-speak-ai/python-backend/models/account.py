@@ -21,5 +21,5 @@ class account:
         return self.__account_type
         
     def get_json(self):
-        account_json = {"_id": self.get_id(), "username": self.get_username(), "password": self.get_password(), "account_type": self.get_account_type}
+        account_json = {"username": self.get_username(), "password": self.get_password(), "account_type": self.get_account_type()}
         return account_json

@@ -13,5 +13,5 @@ class keyword:
         return self.__word
         
     def get_json(self):
-        keyword = {"_id": self.get_id(), "word": self.get_word()}
+        keyword = {"word": self.get_word()}
         return keyword
