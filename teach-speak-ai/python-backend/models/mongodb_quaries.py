@@ -17,10 +17,25 @@ class mongodb_queries:
         return self.__db.HasSaid.find()
     
     def get_all_from_keyword(self):
-        return self.__db.Keyword.find()
+        return self.__db.KeyWords.find()
     
     def get_all_from_school(self):
         return self.__db.School.find()
     
     def get_all_from_teacher(self):
         return self.__db.Teacher.find()
+    
+    def insert_one_into_accounts(self, account):
+        self.__db.Account.insert_one(account.get_json())
+    
+    def insert_one_into_hassaid(self, hassaid):
+        self.__db.HasSaid.insert_one(hassaid.get_json())
+    
+    def insert_one_into_keywords(self, keyword):
+        self.__db.KeyWords.insert_one(keyword.get_json())
+    
+    def insert_one_into_schools(self, school):
+        self.__db.School.insert_one(school.get_json())
+    
+    def insert_one_into_teachers(self, teacher):
+        self.__db.Teacher.insert_one(teacher.get_json())

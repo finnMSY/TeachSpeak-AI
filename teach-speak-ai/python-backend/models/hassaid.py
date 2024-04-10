@@ -20,5 +20,5 @@ class hassaid:
         return self.__teacher
         
     def get_json(self):
-        hassaid_json = {"id": self.get_id(), "word": self.get_word(), "teacher": self.get_teacher}
+        hassaid_json = {"_id": self.get_id(), "word": self.get_word(), "teacher": self.get_teacher}
         return hassaid_json
