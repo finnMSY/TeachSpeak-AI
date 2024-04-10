@@ -6,7 +6,10 @@ class school:
             
     def get_id(self) -> int:
         return self.__id
-    
+            
+    def set_id(self, id):
+        self.__id = id
+
     def get_name(self):
         return self.__name
     
@@ -14,4 +17,5 @@ class school:
         return self.__location
         
     def get_json(self):
-        pass
+        school_json = {"id": self.get_id(), "name": self.get_name(), "location": self.get_location()}
+        return school_json

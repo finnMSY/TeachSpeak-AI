@@ -13,6 +13,9 @@ class teacher:
     def get_id(self) -> int:
         return self.__id
     
+    def set_id(self, id):
+        self.__id = id
+    
     def get_firstname(self) -> str:
         return self.__firstname
     
@@ -29,5 +32,5 @@ class teacher:
         return self.__class_name
     
     def get_json(self):
-        pass
-    
+        teacher_json = {"id": self.get_id(), "firstname": self.get_firstname(), "lastname": self.get_lastname(), "school": self.get_school(), "account": self.get_account(), "class": self.get_class_name()}
+        return teacher_json    
