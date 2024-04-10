@@ -1,5 +1,5 @@
-import keyword
-import teacher
+from models.teacher import teacher
+from models.keyword import keyword
 
 class hassaid:
     def __init__(self, word, teacher):

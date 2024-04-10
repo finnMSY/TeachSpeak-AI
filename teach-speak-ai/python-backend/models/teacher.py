@@ -1,5 +1,5 @@
-import account
-import school
+from models.account import account
+from models.school import school
 
 class teacher:
     def __init__(self, firstname, lastname, school, account, class_name):
