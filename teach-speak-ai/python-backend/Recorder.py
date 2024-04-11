@@ -22,6 +22,7 @@ class Recorder:
         self.input_device = device
         self.max_duration = duration
         self.stop_flag = False
+        self.path = None
 
     # Starts the recording in a thread so that it checks for the stop_recording() at the same time
     def start_recording(self):
@@ -63,5 +64,5 @@ class Recorder:
         self.stop_flag = False
 
         # Writes the audio file to local storage
+        self.path = filename
         sf.write(filename, recorded_audio, self.samplerate)
-        

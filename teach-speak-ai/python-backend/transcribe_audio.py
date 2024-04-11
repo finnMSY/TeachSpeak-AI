@@ -6,7 +6,7 @@ def transcribe_audio(audio_file_name):
     current_directory = os.getcwd()
     
     # Construct the full path to the audio file
-    audio_file_path = os.path.join(current_directory, "teach-speak-ai\\python-backend\\audio_files", audio_file_name)
+    audio_file_path = os.path.join(current_directory, audio_file_name)
 
     # Initialize recognizer
     r = sr.Recognizer() 
@@ -17,7 +17,7 @@ def transcribe_audio(audio_file_name):
             audio_data = r.record(source)
         
         # Convert audio file to text
-        text = r.recognize_google(audio_data)
+        text = r.recognize_whisper(audio_data)
         return text
     
     except Exception as e:
@@ -25,7 +25,7 @@ def transcribe_audio(audio_file_name):
         return None
 
 # Example usage
-audio_file_name = "2024-04-08_23-55-38-recording.wav"
+audio_file_name = "python-backend/audio_files/2024-04-09_18-29-05-recording.wav"
 transcribed_text = transcribe_audio(audio_file_name)
 if transcribed_text:
     print("Transcription result:", transcribed_text)
