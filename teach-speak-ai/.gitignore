@@ -43,3 +43,6 @@ instance/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# vscode workspace files
+.vscode/
