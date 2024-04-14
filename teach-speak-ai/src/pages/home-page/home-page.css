@@ -50,7 +50,7 @@
 }
 
 .home .header li button:hover{
-    background-color: gray;
+    background-color: #58b6e0;
 }
   
 .home .header li button{
@@ -94,7 +94,7 @@
 }
 
 .home .header .title button:hover {
-    background-color: #0094D5;
+    background-color: #58b6e0;
 }
 
 .home .navigation ul {
@@ -120,7 +120,7 @@
   
   /* Change the link color on hover */
 .home .navigation li button:hover {
-    background-color: gray;
+    background-color: #58b6e0;
     color: white;
 }
 
