@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './home-page.css';
 import axios from "axios";
 
 function HomePage() {
     const [recording, setRecording] = useState(false);
+    const [driversList, setDriversList] = useState([]);
+    const [defaultDriver, setDefaultDriver] = useState({});
 
     const startRecording = async () => {
         try {
@@ -28,11 +30,51 @@ function HomePage() {
         }
     }
 
+    const getAudioDrivers = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/api/get_audio_drivers");
+            const driverList = response.data[0];
+            const defaultDriver = response.data[1];
+            setDriversList(driverList);
+            setDefaultDriver(defaultDriver);
+        } catch (error) {
+            console.error("Error, couldn't retrieve drivers:", error);
+        }
+    }
+
+    const setCurrentDriver = async (driver) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:5000/api/set_driver/${driver}`,
+                {
+                    headers: {
+                    "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+        } catch (error) {
+            console.error("Error, couldn't set driver:", error);
+        }
+    }
+
+    useEffect(() => {
+        getAudioDrivers();  
+    }, []);
+
     return (
         <div>
             <h1>Recording Page</h1>
+            <select onChange={(e) => setCurrentDriver(e.target.value)}>
+                <option value={defaultDriver.name}>{defaultDriver.name}</option>
+                {driversList.map((option, index) => (
+                    option.name !== defaultDriver.name && (
+                        <option key={index} value={option.name}>{option.name}</option>
+                    )
+                ))}
+            </select>
             <button onClick={startRecording}>Start</button>
             <button onClick={stopRecording}>Stop</button>
+
 
             {recording === 'loading' && 
                 <p>Recording...</p>

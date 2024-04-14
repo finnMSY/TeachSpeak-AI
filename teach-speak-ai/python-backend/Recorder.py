@@ -5,17 +5,13 @@ import concurrent.futures
 from datetime import datetime
 import os
 
-# Gets the computers default audio device
-def get_default_audio_device():
-    default_input_device_info = sd.query_devices(device=sd.default.device[0])
-    return default_input_device_info
-
-# Returns a list of all the computers connected audio devices
-def get_all_audio_devices():
-    return sd.query_devices()
+# Gets the computers audio devices
+def get_audio_devices() -> list:
+    default_input_device_info = dict(sd.query_devices(device=sd.default.device[0]))
+    return [sd.query_devices(), default_input_device_info]
 
 class Recorder:
-    def __init__(self, samplerate=44100, channels=2, duration=10, device=get_default_audio_device()['name']):
+    def __init__(self, samplerate=44100, channels=2, duration=10, device=get_audio_devices()[1]['name']):
         self.samplerate = samplerate
         self.channels = channels
         self.recording = False
@@ -23,6 +19,11 @@ class Recorder:
         self.max_duration = duration
         self.stop_flag = False
         self.path = None
+
+    def set_audio_device(self, device) -> list:
+       print("HEllo")
+       self.input_device = device
+
 
     # Starts the recording in a thread so that it checks for the stop_recording() at the same time
     def start_recording(self):
@@ -36,7 +37,7 @@ class Recorder:
     # Logic method that is run parallel to the stop_recording() checks
     def _record(self):
         print("Recording...")
-
+        
         # Starts the recording
         recording = sd.rec(int(self.max_duration * self.samplerate), samplerate=self.samplerate, channels=self.channels, device=self.input_device, dtype='int16')
         
