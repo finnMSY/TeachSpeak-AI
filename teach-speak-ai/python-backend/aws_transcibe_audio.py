@@ -1,8 +1,23 @@
 import boto3
 import time
+import configparser
+import os
 
 def transcribe_audio(audio_file, output_file):
-    transcribe = boto3.Session(profile_name='teachspeakais3').client('transcribe', region_name='ap-southeast-2')
+    # load AWS credentials
+
+    config = configparser.ConfigParser()
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    config_file_path = os.path.join(script_dir, "awsconfig.ini")
+    config.read(config_file_path)
+    
+    aws_access_key_id = config['teachspeakais3']['aws_access_key_id']
+    aws_secret_access_key = config['teachspeakais3']['aws_secret_access_key']
+    
+    transcribe = boto3.Session(
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,   
+    ).client('transcribe', region_name='ap-southeast-2')
 
     job_name = "transcribe-job-" + str(int(time.time()))
     job_uri = "s3://teachspeakai/" + audio_file
