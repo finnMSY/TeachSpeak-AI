@@ -21,7 +21,6 @@ class Recorder:
         self.path = None
 
     def set_audio_device(self, device) -> list:
-       print("HEllo")
        self.input_device = device
 
 

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
+import RootContext from "../../providers/root";
 import './home-page.css';
 import axios from "axios";
 
 function HomePage() {
+    const {
+        setCurrentPage
+      } = useContext(RootContext);
+
     const [recording, setRecording] = useState(false);
     const [driversList, setDriversList] = useState([]);
     const [defaultDriver, setDefaultDriver] = useState({});
@@ -74,6 +79,7 @@ function HomePage() {
             </select>
             <button onClick={startRecording}>Start</button>
             <button onClick={stopRecording}>Stop</button>
+            <button onClick={() => setCurrentPage("loading")}>Next Page</button>
 
 
             {recording === 'loading' && 
