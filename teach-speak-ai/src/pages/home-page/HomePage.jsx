@@ -2,25 +2,25 @@ import React, { useEffect, useState, useContext} from 'react';
 import RootContext from "../../providers/root";
 import './home-page.css';
 import axios from "axios";
+import ClassroomIMG from "./classroom-stock.jpg"
 
 function HomePage() {
     const {
         setCurrentPage
       } = useContext(RootContext);
 
-    const [recording, setRecording] = useState(false);
+    const [currentlyRecording, isCurrentlyRecording] = useState(false);
     const [driversList, setDriversList] = useState([]);
     const [defaultDriver, setDefaultDriver] = useState({});
 
     const startRecording = async () => {
         try {
-            setRecording('loading');
+            isCurrentlyRecording(true)
             const response = await axios.get("http://localhost:5000/api/start_recording");
             console.log(response.data)
-            setRecording(true);
         } catch (error) {
             console.error("Error starting recording:", error);
-            setRecording(false);
+            isCurrentlyRecording(false)
         }
     }
 
@@ -28,10 +28,10 @@ function HomePage() {
         try {
             const response = await axios.get("http://localhost:5000/api/stop_recording");
             console.log(response.data); // Assuming the response contains the path to the saved audio file
-            setRecording("saved")
-            setRecording(false);
+            isCurrentlyRecording(false)
         } catch (error) {
             console.error("Error stopping recording:", error);
+            isCurrentlyRecording(true)
         }
     }
 
@@ -67,24 +67,44 @@ function HomePage() {
     }, []);
 
     return (
-        <div>
-            <h1>Recording Page</h1>
-            <select onChange={(e) => setCurrentDriver(e.target.value)}>
-                <option value={defaultDriver.name}>{defaultDriver.name}</option>
-                {driversList.map((option, index) => (
-                    option.name !== defaultDriver.name && (
-                        <option key={index} value={option.name}>{option.name}</option>
-                    )
-                ))}
-            </select>
-            <button onClick={startRecording}>Start</button>
-            <button onClick={stopRecording}>Stop</button>
-            <button onClick={() => setCurrentPage("loading")}>Next Page</button>
-
-
-            {recording === 'loading' && 
-                <p>Recording...</p>
-            }
+        <div className='home'>
+            <div class="main" style={{ backgroundImage: `url(${ClassroomIMG})` }}>
+                <div className='overlay'></div>
+                <div className='container'>
+                    <div className='center'>
+                        <i className={`gg-record record-icon`} style={{ color: currentlyRecording ? '#F61B1C' : '#0094D5' }}></i> 
+                        <p style={{textAlign: 'center', opacity: currentlyRecording ? '1' : '0', color: '#F61B1C', fontWeight: 'bold'}}>RECORDING</p>
+                        <div className='button-container'>
+                            <select onChange={(e) => setCurrentDriver(e.target.value)}>
+                                <option value={defaultDriver.name}>{defaultDriver.name}</option>
+                                {driversList.map((option, index) => (
+                                    option.name !== defaultDriver.name && (
+                                        <option key={index} value={option.name}>{option.name}</option>
+                                    )
+                                ))}
+                            </select>
+                            <button style={{backgroundColor: '#2FB362'}} className='start' onClick={startRecording}>Start</button>
+                            <button style={{backgroundColor: '#E53430'}} className='stop' onClick={stopRecording}>Stop</button>
+                            <button style={{backgroundColor: '#0094D5'}} onClick={() => setCurrentPage("loading")}>Next Page</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header">
+                <ul>
+                    <li className='title'><button onClick={() => setCurrentPage("")}>TeachSpeakAI</button></li>
+                    <li><button><i class="gg-profile"></i></button></li>
+                    <li><button><i class="gg-bell"></i></button></li>
+                </ul>                
+                </div>
+                <div class="navigation">
+                <ul>
+                    <li><button className='active'><i class="gg-record"></i>Record Session</button></li>
+                    <li><button><i class="gg-arrow-right-o"></i> Progress</button></li>
+                    <li><button><i class="gg-time"></i> History</button></li>
+                    <li><button className='bottom'><i class="gg-shape-hexagon"></i>Settings</button></li>
+                </ul>
+            </div>
         </div>
     );
 }

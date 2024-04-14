@@ -26,6 +26,7 @@ class Recorder:
 
     # Starts the recording in a thread so that it checks for the stop_recording() at the same time
     def start_recording(self):
+        self.stop_flag = False
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(self._record)
 
