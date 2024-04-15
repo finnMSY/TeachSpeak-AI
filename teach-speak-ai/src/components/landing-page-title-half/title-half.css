@@ -1,0 +1,50 @@
+.title-half img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title-half h1 {  
+    z-index: 10;
+    color: white;
+    font-size: 60px;
+    text-align: center;
+    padding-bottom: 110px;
+    width: 100%;
+}
+
+.title-half p {  
+    z-index: 10;
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    padding-top: 110px;
+    letter-spacing: 2px;
+    line-height: 2;
+    width: 60%;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title-half .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #0094D5;
+    opacity: 0.75;
+    z-index: 1;
+}
+
+.title-half {
+    height: 99.5vh;
+    width: 100%;
+    position: relative;
+}
