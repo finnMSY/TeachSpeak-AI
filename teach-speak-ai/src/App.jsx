@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import RootContext from "./providers/root";
-import { ResultsPage, LoadingPage, HomePage, LandingPage } from "./pages";
+import { HomePage, LandingPage } from "./pages";
 export const PageName = "results" | "loading" | "home";
 
 function App() {
@@ -10,10 +10,6 @@ function App() {
     // Root page navigation setup.
     const renderPage = () => {
         switch (currentPage) {
-        case "results":
-            return <ResultsPage />;
-        case "loading":
-            return <LoadingPage />;
         case "home":
             return <HomePage />;
         default:

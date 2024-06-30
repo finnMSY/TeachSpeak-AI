@@ -1,15 +1,15 @@
 import React, { useState, useContext} from 'react';
 import RootContext from "../../providers/root";
 import './home-page.css';
-import ClassroomIMG from "./classroom-stock.jpg"
-import { RecordingMenu, Progress, History, Settings } from '../../components';
+import { RecordingMenu, Progress, History, Settings, Loading, Results } from '../../components';
 
 function HomePage() {
     const {
         setCurrentPage
     } = useContext(RootContext);
 
-    const [menuSlide, setMenuSlide] = useState();
+    const [menuSlide, setMenuSlide] = useState('');
+    const [keywordCounts, setKeywordCounts] = useState({});
 
     const renderComponent = () => {
         switch (menuSlide) {
@@ -19,17 +19,18 @@ function HomePage() {
                 return <History />;
             case 'settings':
                 return <Settings />;
+            case 'loading':
+                return <Loading />
+            case 'results':
+                return <Results keywordCounts={keywordCounts}/>
             default:
-                return <RecordingMenu />;
+                return <RecordingMenu setMenuSlide={setMenuSlide} setKeywordCounts={setKeywordCounts} />;
         }
     };
 
     return (
         <div className='home'>
-            <div class="main" style={{ backgroundImage: `url(${ClassroomIMG})` }}>
-                <div className='overlay'></div>
-                {renderComponent()}
-            </div>
+            {renderComponent()}
             <div class="header">
                 <ul>
                     <li className='title'><button onClick={() => setCurrentPage("")}>TeachSpeakAI</button></li>

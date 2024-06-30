@@ -3,7 +3,7 @@ import soundfile as sf
 import time
 import concurrent.futures
 from datetime import datetime
-import os
+import os, shutil
 from aws import transcribe_audio, upload_to_s3
 
 # Gets the computer's audio devices
@@ -20,6 +20,7 @@ class Recorder:
         self.max_duration = duration
         self.stop_flag = False
         self.path = None
+        self.future = None
 
     def set_audio_device(self, device):
         self.input_device = device
@@ -34,13 +35,17 @@ class Recorder:
     def start_recording(self):
         self.stop_flag = False
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(self._record)
+            self.future = executor.submit(self._record)
 
     # When this function is called it stops the recording
     def stop_recording(self):
         self.stop_flag = True
+        if self.future:
+            self.future.result()  # Wait for the recording to complete
 
     def get_path(self):
+        if self.future:
+            self.future.result()  # Ensure the recording and saving is complete before getting the path
         return str(self.path)
 
     # Submits the audio file for transcription
@@ -49,7 +54,8 @@ class Recorder:
         os.makedirs(transcription_output_directory, exist_ok=True)
         file_name = self.path.split("\\")[-1]
         upload_to_s3(file_name=self.path, bucket="teachspeak", object_name=f"transcribed-audio-files/{file_name}")
-        transcribe_audio(self.path, os.path.join(transcription_output_directory, f"{self.get_current_time()}-transcription.txt"))
+        transcribed_text = transcribe_audio(self.path, os.path.join(transcription_output_directory, f"{self.get_current_time()}-transcription.txt"))
+        return transcribed_text
 
     # Logic method that is run parallel to the stop_recording() checks
     def _record(self):
@@ -60,7 +66,6 @@ class Recorder:
             recording = sd.rec(int(self.max_duration * self.samplerate), samplerate=self.samplerate, channels=self.channels, device=1, dtype='int16')
         except Exception as e:
             print(e)
-        print("HELLO")
         
         # Checks for whether the max_duration is up, or the stop_recording() has been triggered
         start_time = time.time()
@@ -85,5 +90,17 @@ class Recorder:
         self.stop_flag = False
 
         # Writes the audio file to local storage
+        if self.path != None:
+            for file in os.listdir(output_directory):
+                file_path = os.path.join(output_directory, file)
+                try:
+                    if os.path.isfile(file_path) or os.path.islink(file_path):
+                        os.unlink(file_path)
+                    elif os.path.isdir(file_path):
+                        shutil.rmtree(file_path)
+                except Exception as e:
+                    print('Failed to delete %s. Reason: %s' % (file_path, e))
+
         self.path = filename
+        print(filename)
         sf.write(filename, recorded_audio, self.samplerate)

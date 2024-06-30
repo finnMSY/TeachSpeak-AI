@@ -1,7 +1,8 @@
 from flask import Flask
-from Recorder import Recorder, get_audio_devices
+from recorder import Recorder, get_audio_devices
 from flask_cors import CORS
 import time
+from count_keywords import count_keywords
 
 app = Flask(__name__)
 recorder = Recorder()
@@ -18,14 +19,14 @@ def start_recording_api():
 
 @app.route('/api/stop_recording')
 def stop_recording_api():
-    print("RECORD")
     recorder.stop_recording()
-    return "Recording stopped successfully"
+    return recorder.get_path()
 
 @app.route('/api/submit-audio')
 def submit_audio_api():
-    recorder.submit_audio()
-    return "Audio has been submitted for transcribing"
+    text = recorder.submit_audio()
+    keyword_counts = count_keywords(text) 
+    return keyword_counts
 
 @app.route('/api/get_audio_drivers')
 def get_audio_api():

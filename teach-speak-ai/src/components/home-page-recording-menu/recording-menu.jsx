@@ -2,8 +2,9 @@ import RootContext from "../../providers/root";
 import './recording-menu.css';
 import React, { useEffect, useState, useContext} from 'react';
 import axios from "axios";
+import ClassroomIMG from "../../pages/home-page/classroom-stock.jpg"
 
-function RecordingMenu() {
+function RecordingMenu({setMenuSlide, setKeywordCounts}) {
     const {
         setCurrentPage
     } = useContext(RootContext);
@@ -28,6 +29,7 @@ function RecordingMenu() {
             const response = await axios.get("http://localhost:5000/api/stop_recording");
             console.log(response.data); // Assuming the response contains the path to the saved audio file
             isCurrentlyRecording(false)
+            console.log(response)
         } catch (error) {
             console.error("Error stopping recording:", error);
             isCurrentlyRecording(true)
@@ -47,12 +49,15 @@ function RecordingMenu() {
     }
 
     const submit = async () => {
+        setMenuSlide("loading")
         try {
-            await axios.get("http://localhost:5000/api/submit-audio");
+            const response = await axios.get("http://localhost:5000/api/submit-audio");
+            setKeywordCounts(response.data)
 
         } catch (error) {
             console.error("lol:", error);
         }
+        setMenuSlide("results")
     }
 
     const setCurrentDriver = async (driver) => {
@@ -75,22 +80,25 @@ function RecordingMenu() {
     }, []);
     
     return (
-        <div className='container'>
-            <div className='center'>
-                <i className={`gg-record record-icon`} style={{ color: currentlyRecording ? '#F61B1C' : '#0094D5' }}></i> 
-                <p style={{textAlign: 'center', opacity: currentlyRecording ? '1' : '0', color: '#F61B1C', fontWeight: 'bold'}}>RECORDING</p>
-                <div className='button-container'>
-                    <select onChange={(e) => setCurrentDriver(e.target.value)}>
-                        <option value={defaultDriver.name}>{defaultDriver.name}</option>
-                        {driversList.map((option, index) => (
-                            option.name !== defaultDriver.name && (
-                                <option key={index} value={option.name}>{option.name}</option>
-                            )
-                        ))}
-                    </select>
-                    <button style={{backgroundColor: '#2FB362'}} className='start' onClick={startRecording}>Start</button>
-                    <button style={{backgroundColor: '#E53430'}} className='stop' onClick={stopRecording}>Stop</button>
-                    <button style={{backgroundColor: '#0094D5'}} onClick={submit}>Next Page</button>
+        <div class="main" style={{ backgroundImage: `url(${ClassroomIMG})` }}>
+            <div className='overlay'></div>
+            <div className='container'>
+                <div className='center'>
+                    <i className={`gg-record record-icon`} style={{ color: currentlyRecording ? '#F61B1C' : '#0094D5' }}></i> 
+                    <p style={{textAlign: 'center', opacity: currentlyRecording ? '1' : '0', color: '#F61B1C', fontWeight: 'bold'}}>RECORDING</p>
+                    <div className='button-container'>
+                        <select onChange={(e) => setCurrentDriver(e.target.value)}>
+                            <option value={defaultDriver.name}>{defaultDriver.name}</option>
+                            {driversList.map((option, index) => (
+                                option.name !== defaultDriver.name && (
+                                    <option key={index} value={option.name}>{option.name}</option>
+                                )
+                            ))}
+                        </select>
+                        <button style={{backgroundColor: '#2FB362'}} className='start' onClick={startRecording}>Start</button>
+                        <button style={{backgroundColor: '#E53430'}} className='stop' onClick={stopRecording}>Stop</button>
+                        <button style={{backgroundColor: '#0094D5'}} onClick={submit}>Submit</button>
+                    </div>
                 </div>
             </div>
         </div>

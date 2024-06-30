@@ -4,3 +4,5 @@ export { default as RecordingMenu } from "./home-page-recording-menu/recording-m
 export { default as Progress } from "./home-page-progress/progress";
 export { default as History } from "./home-page-history/history";
 export { default as Settings } from "./home-page-settings/settings";
+export { default as Loading } from "./home-page-loading/loading";
+export { default as Results } from "./home-page-results/results";
