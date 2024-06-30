@@ -4,7 +4,7 @@ import time
 import concurrent.futures
 from datetime import datetime
 import os, shutil
-from aws import transcribe_audio, upload_to_s3
+from util.aws import transcribe_audio, upload_to_s3
 
 # Gets the computer's audio devices
 def get_audio_devices() -> list:

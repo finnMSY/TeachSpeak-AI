@@ -2,7 +2,7 @@ from flask import Flask
 from util.Recorder import Recorder, get_audio_devices
 
 from flask_cors import CORS
-from count_keywords import count_keywords
+from util.count_keywords import count_keywords
 
 app = Flask(__name__)
 recorder = Recorder()

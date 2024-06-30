@@ -7,7 +7,7 @@ import requests
 
 config = configparser.ConfigParser()
 script_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)))
-config_file_path = os.path.join(script_dir, "util/awsconfig.ini")
+config_file_path = os.path.join(script_dir, "awsconfig.ini")
 config.read(config_file_path)
 
 aws_access_key_id = config['teachspeakais3']['aws_access_key_id']
