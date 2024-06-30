@@ -40,7 +40,7 @@ function HomePage() {
                 </div>
                 <div class="navigation">
                 <ul>
-                    <li><button onClick={() => setMenuSlide('')} className={menuSlide === '' ? 'active' : ''}><i class="gg-record"></i>Record Session</button></li>
+                    <li><button onClick={() => setMenuSlide('')} className={menuSlide === '' || menuSlide === 'loading' || menuSlide === 'results' ? 'active' : ''}><i class="gg-record"></i>Record Session</button></li>
                     <li><button onClick={() => setMenuSlide('progress')} className={menuSlide === 'progress' ? 'active' : ''}><i class="gg-arrow-right-o"></i> Progress</button></li>
                     <li><button onClick={() => setMenuSlide('history')} className={menuSlide === 'history' ? 'active' : ''}><i class="gg-time"></i> History</button></li>
                     <li><button onClick={() => setMenuSlide('settings')} className={menuSlide === 'settings' ? 'active' : ''}><i class="gg-shape-hexagon"></i>Settings</button></li>
