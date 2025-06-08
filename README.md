@@ -4,7 +4,7 @@ Our attempt at a machine learning model which usings ai to tally up specific key
 
 ## Software Design
 
-![img](assets/software-design.png)
+![Architecture diagram](assets/software-design.png) 
 
 ## File Structure
 <pre>
