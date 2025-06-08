@@ -7,6 +7,7 @@ Our attempt at a machine learning model which usings ai to tally up specific key
 ![img](teach-speak-ai/assets/software-design.png)
 
 ## File Structure
+<pre>
 .
 └── teach-speak-ai/
     ├── backend/
@@ -49,3 +50,4 @@ Our attempt at a machine learning model which usings ai to tally up specific key
     │   └── ...
     ├── README.md
     └── .gitignore
+</pre>
